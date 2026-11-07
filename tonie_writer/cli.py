@@ -504,7 +504,18 @@ def build_parser() -> argparse.ArgumentParser:
     p_index = sub.add_parser("index", help="regenerate data/tonies.json + TONIES.md")
     p_index.set_defaults(func=cmd_index)
 
+    p_gui = sub.add_parser("gui", help="open the local toolbox GUI")
+    p_gui.add_argument("--listen-port", type=int, default=8765)
+    p_gui.add_argument("--no-browser", action="store_true")
+    p_gui.set_defaults(func=cmd_gui)
+
     return parser
+
+
+def cmd_gui(args: argparse.Namespace) -> int:
+    from tonie_writer.gui import serve
+
+    return serve(args.listen_port, open_browser=not args.no_browser, port=args.port)
 
 
 def main(argv: list[str] | None = None) -> int:

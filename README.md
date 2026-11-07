@@ -29,6 +29,41 @@ pm3-flash-all                 # put the PM3 in bootloader mode first
 
 No `pip install` step: the CLI is Python standard library only.
 
+## Local GUI
+
+```sh
+./tonie gui
+```
+
+This opens **Tonie Studio** at `http://127.0.0.1:8765`. Keep the terminal
+open while using it. The GUI also uses only the Python standard library;
+there is nothing to install or build.
+
+Use the **Dark mode** toggle in the top bar to switch themes. It follows your
+system theme initially and remembers your choice in the browser.
+
+- Browse every Tonie in the local catalog in a grid or list, with ranked
+  search (including fuzzy matches), language and series filters, and sorting.
+- Inspect a Tonie's UID, source file, and all eight blocks, or download its NFC dump.
+- Select an exact Tonie, preview the write commands without hardware, and
+  confirm a write. Full-tag, UID-only, and blocks-only modes, verification,
+  and retry settings are available.
+- Read and identify a tag, run diagnostics, probe a magic tag, or rebuild
+  the local index. A magic probe has its own confirmation because it writes
+  a temporary UID.
+- Set the serial port, verbose logging, and JSON output under **Connection
+  & output settings**. View command output and session history in **Activity**.
+
+The server listens only on your computer and serializes operations so two
+GUI requests cannot use the reader simultaneously. Do not run a separate
+CLI hardware command during a GUI operation. Keep the reader connected until
+an operation finishes, including after closing the browser. Session history
+is kept in the current page, not persisted to disk.
+
+For a different GUI port, use `./tonie gui --listen-port 8766`. To start
+without opening a browser, add `--no-browser`. To select the reader at startup:
+`./tonie --port /dev/ttyACM0 gui`. Press `/` in the GUI to focus catalog search.
+
 ## Commands
 
 | Command | Behaviour |
@@ -40,6 +75,7 @@ No `pip install` step: the CLI is Python standard library only.
 | `tonie read` | read the tag on the reader and identify it against the catalog |
 | `tonie doctor [--probe-magic]` | environment + hardware check |
 | `tonie index` | regenerate `data/tonies.json` + `TONIES.md` locally |
+| `tonie gui [--listen-port N] [--no-browser]` | open the complete local browser toolbox |
 
 Global flags: `--port <dev>`, `--json`, `--verbose`.
 
