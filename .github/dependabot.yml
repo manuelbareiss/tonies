@@ -1,0 +1,14 @@
+version: 2
+updates:
+  # Python standard library only (see CLAUDE.md), so GitHub Actions is the
+  # only ecosystem with dependencies to update.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    cooldown:
+      default-days: 7
+    groups:
+      minor-and-patch:
+        update-types: ["minor", "patch"]
